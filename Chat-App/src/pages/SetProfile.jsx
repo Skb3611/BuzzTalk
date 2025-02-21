@@ -5,6 +5,7 @@ import loader from '../assets/loader.gif'
 import { useNavigate } from 'react-router-dom';
 import { setProfileapi } from '../Api/api';
 import Navbar from '../components/Navbar';
+import multiavatar from '@multiavatar/multiavatar/esm'
 const SetProfile = () => {
     const [avtars, setavtars] = useState([])
     const [isLoading, setIsLoading] = useState(true)
@@ -23,13 +24,20 @@ const SetProfile = () => {
 
     useEffect(() => {
         async function getdata() {
+            // console.log(multiavatar("random"))
             let imgdata = []
+            // for(let i=0;i<5;i++){
+            //     let code = multiavatar("random")
+            //     imgdata.push(code)
+            // }
             for (let i = 0; i < 5; i++) {
-                let a = await axios.get(`https://api.multiavatar.com/${Math.floor(Math.random() * 10000)}?apikey=uvj7rJdwi8OT05
-                `)
-                const buffer = new Buffer(a.data)
+                // let a = await axios.get(`https://api.multiavatar.com/${Math.floor(Math.random() * 10000)}?apikey=uvj7rJdwi8OT05
+                // `)
+                let a = multiavatar(`random${Math.floor(Math.random() * 10000)}`)
+                const buffer = new Buffer(a)
                 imgdata.push(buffer.toString("base64"))
             }
+            console.log(imgdata)
             setavtars(imgdata)
             setIsLoading(false)
         }
@@ -72,6 +80,7 @@ const SetProfile = () => {
                             return (
                                 <div key={Math.random()} className='cursor-pointer' onClick={() => handleselect(item)}>
                                     <img src={`data:image/svg+xml;base64,${item}`} width={100} alt="" className={`${isSelected(item) ? "border-fuchsia-700 rounded-full border-4 border-spacing-10" : ""}`} />
+                                    
                                 </div>
                             )
                         })}
