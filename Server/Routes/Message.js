@@ -25,4 +25,5 @@ router.post('/getallmsg',async(req,res)=>{
         return res.status(500).send('Internal server error')
     }
 })
+
 module.exports= router
